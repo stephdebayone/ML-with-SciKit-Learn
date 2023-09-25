@@ -1,5 +1,5 @@
 import numpy as np 
-
+from sklearn_impute import SimpleImputer 
 
 
 # extraire du champ name le statut Mr M Miss Misses 
@@ -56,7 +56,6 @@ def normalize_sex(df):
 # Remplacer les valeurs nulles du champ age
 def normalize_age(df):
     median = df['Age'].median()
-    print(median) 
     df = df.fillna(value= {'Age' : median }) 
     return df 
     
@@ -73,6 +72,11 @@ def nmEmbarked(row):
 def normalize_embarked(df):
     df['Embarked'] = df.apply(nmEmbarked,axis=1) 
 
+def normalize_missing(df): 
+    imputer = SimpleImputer(strategy='median') 
+    imputer.fit(df) x = imputer.transform(df) 
+    toReturn = pd.DataFrame(X, columns=df.columns,index=df.index) 
+    return toReturn 
 
 def normalize(df): 
     df_copy = df.copy() 
@@ -85,5 +89,6 @@ def normalize(df):
     # Remplacer les valeurs nulles du champ age
     df_copy = normalize_age(df_copy)
     df_copy = df_copy.drop(columns=['Name','Cabin','Ticket' , 'PassengerId' , 'Gender' ])
+    df_copy = normalize_missing(df_copy)
     return df_copy 
  
