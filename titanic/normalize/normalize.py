@@ -75,15 +75,15 @@ def normalize_embarked(df):
 
 
 def normalize(df): 
-
+    df_copy = df.copy() 
     # extraire du champ name le statut Mr M Miss Misses 
-    normalize_name(df) 
+    normalize_name(df_copy) 
     # extraire du champ sex 0 si il s'agit d'un homme 1 s'il s'agit d'une femme
-    normalize_sex(df) 
+    normalize_sex(df_copy) 
     # remplacer le champ embarked par une valeur numérique
-    normalize_embarked(df)
+    normalize_embarked(df_copy)
     # Remplacer les valeurs nulles du champ age
-    df = normalize_age(df)
-    df = df.drop(columns=['Name','Cabin','Ticket' , 'PassengerId' , 'Gender'])
-    return df 
+    df_copy = normalize_age(df_copy)
+    df_copy = df_copy.drop(columns=['Name','Cabin','Ticket' , 'PassengerId' , 'Gender' ])
+    return df_copy 
  
