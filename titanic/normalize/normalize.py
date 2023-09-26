@@ -1,6 +1,6 @@
 import numpy as np 
-from sklearn_impute import SimpleImputer 
-
+from sklearn.impute import SimpleImputer 
+import pandas as pd 
 
 # extraire du champ name le statut Mr M Miss Misses 
 def nmName(row): 
@@ -74,8 +74,9 @@ def normalize_embarked(df):
 
 def normalize_missing(df): 
     imputer = SimpleImputer(strategy='median') 
-    imputer.fit(df) x = imputer.transform(df) 
-    toReturn = pd.DataFrame(X, columns=df.columns,index=df.index) 
+    imputer.fit(df)
+    x = imputer.transform(df) 
+    toReturn = pd.DataFrame(x, columns=df.columns,index=df.index) 
     return toReturn 
 
 def normalize(df): 
